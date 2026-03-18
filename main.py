@@ -1,25 +1,57 @@
 import translator as tr
 
-t = tr.Translator()
+def main():
+    """
+    Obiettivo:
+    - Punto di ingresso del programma.
+    - Creare un Translator con il file "dictionary.txt".
+    - Mostrare il menù in un ciclo.
+    - Leggere la scelta dell'utente.
+    - Chiamare il metodo appropriato del Translator.
+    """
+    t = tr.Translator("dictionary.txt")
 
+    while True:
+        # Mostro il menù
+        t.printMenu()
 
-while(True):
+        # Leggo la scelta
+        choice = input("Seleziona un'opzione: ").strip()
 
-    t.printMenu()
+        # Controllo che sia un numero
+        if not choice.isdigit():
+            print("Errore: devi inserire un numero.")
+            continue
 
-    t.loadDictionary("filename.txt")
+        choice = int(choice)
 
-    txtIn = input()
+        # Gestione delle scelte
+        if choice == 1:
+            # Aggiungi nuova parola
+            entry = input("Inserisci <parola_aliena> <traduzione1 traduzione2 ...>: ")
+            t.handleAdd(entry)
 
-    # Add input control here!
+        elif choice == 2:
+            # Cerca traduzione
+            query = input("Inserisci la parola aliena da tradurre: ")
+            t.handleTranslate(query)
 
-    if int(txtIn) == 1:
-        print()
-        txtIn = input()
-        pass
-    if int(txtIn) == 2:
-        pass
-    if int(txtIn) == 3:
-        pass
-    if int(txtIn) == 4:
-        break
+        elif choice == 3:
+            # Cerca con wildcard
+            pattern = input("Inserisci la parola con '?': ")
+            t.handleWildcard(pattern)
+
+        elif choice == 4:
+            # Stampa tutto il dizionario
+            t.printDictionary()
+
+        elif choice == 5:
+            # Esci
+            print("Uscita dal programma.")
+            break
+
+        else:
+            print("Scelta non valida.")
+
+if __name__ == "__main__":
+    main()
